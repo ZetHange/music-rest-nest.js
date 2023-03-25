@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import * as pug from 'pug';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,6 +9,7 @@ import { FileService, FileTypes } from 'src/file/file.service';
 import { RoleService } from 'src/role/role.service';
 import { MailerService } from '@nestjs-modules/mailer';
 import { TokenService } from './../token/token.service';
+import { REQUEST } from '@nestjs/core';
 
 @Injectable()
 export class UserService {
@@ -24,6 +20,7 @@ export class UserService {
     private readonly roleService: RoleService,
     private readonly tokenService: TokenService,
     private readonly mailerService: MailerService,
+    @Inject(REQUEST) private readonly request: any,
   ) {}
 
   async getAllUsers() {
@@ -37,6 +34,14 @@ export class UserService {
       },
       relations: ['roles'],
     });
+  }
+
+  async getMe() {
+    const userByRequest = await this.request.user;
+    const user = await this.userRepository.findOne({
+      where: { id: userByRequest.id },
+    });
+    return user;
   }
 
   async getUserByLogin(login: string) {
@@ -88,7 +93,7 @@ export class UserService {
         },
       });
 
-      await this.roleService.createDefaultRoles()
+      await this.roleService.createDefaultRoles();
       return await this.userRepository.save(newUser);
     }
   }
@@ -108,12 +113,7 @@ export class UserService {
       const userUpdated = {
         ...user,
         isVerifiedEmail: true,
-        roles: userCount === 1 ? [
-          role,
-          roleAdmin,
-        ] : [
-          role
-        ],
+        roles: userCount === 1 ? [role, roleAdmin] : [role],
       };
 
       console.log(JSON.stringify(userUpdated));
@@ -122,7 +122,10 @@ export class UserService {
       await this.tokenService.deleteToken(token);
 
       const file = pug.compileFile(__dirname + '/templates/confirmedEmail.pug');
-      return file();
+      return file({
+        login: userUpdated.login,
+        avatar: userUpdated.avatar,
+      });
     }
     throw new HttpException('Неверный токен', HttpStatus.BAD_REQUEST);
   }

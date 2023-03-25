@@ -116,9 +116,7 @@ export class TrackService {
 
       if (track.byUserId === user.id) {
         return await this.trackRepository.save(updatedTrack);
-      } else if (
-        user.roles.filter((i: any) => i.title === 'ADMIN').length
-      ) {
+      } else if (user.roles.filter((i: any) => i.title === 'ADMIN').length) {
         return await this.trackRepository.save(updatedTrack);
       } else {
         throw new HttpException(

@@ -10,8 +10,6 @@ import {
   UseInterceptors,
   UploadedFiles,
   Patch,
-  Request,
-  Req,
   Delete,
   UseGuards,
 } from '@nestjs/common';
@@ -131,6 +129,6 @@ export class TrackController {
   @Roles('USER', 'ADMIN')
   @UseGuards(RolesGuard)
   delete(@Param('trackId') trackId: number) {
-    return this.trackService.delete(trackId)
+    return this.trackService.delete(trackId);
   }
 }

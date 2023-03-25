@@ -1,12 +1,16 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateGroupDto {
   @ApiProperty({ description: 'Название группы' })
-  readonly title: string
+  readonly title: string;
 
   @ApiProperty({ description: 'Описание группы' })
-  readonly description: string
+  readonly description: string;
 
-  @ApiProperty({ type: 'string', format: 'binary', description: 'Обложка группы' })
-  readonly cover: string
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    description: 'Обложка группы',
+  })
+  readonly cover: string;
 }

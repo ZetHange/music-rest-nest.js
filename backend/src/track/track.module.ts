@@ -11,11 +11,11 @@ import { AuthModule } from './../auth/auth.module';
 
 @Module({
   imports: [
-  TypeOrmModule.forFeature([TrackEntity]),
+    TypeOrmModule.forFeature([TrackEntity]),
     GroupModule,
     FileModule,
     AlbumModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [TrackController],
   providers: [TrackService],

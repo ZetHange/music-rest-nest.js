@@ -1,27 +1,33 @@
-import { RoleEntity } from "src/role/entities/role.entity"
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm"
+import { RoleEntity } from 'src/role/entities/role.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 
 @Entity('user')
 export class UserEntity {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ unique: true })
-    login: string
-    
-    @Column({ unique: true })
-    email: string
+  @Column({ unique: true })
+  login: string;
 
-    @Column()
-    avatar: string
+  @Column({ unique: true })
+  email: string;
 
-    @Column()
-    password: string
+  @Column()
+  avatar: string;
 
-    @Column()
-    isVerifiedEmail: boolean
+  @Column()
+  password: string;
 
-    @ManyToMany(() => RoleEntity, (role: RoleEntity) => role.users)
-    @JoinTable()
-    roles: RoleEntity[];
+  @Column()
+  isVerifiedEmail: boolean;
+
+  @ManyToMany(() => RoleEntity, (role: RoleEntity) => role.users)
+  @JoinTable()
+  roles: RoleEntity[];
 }

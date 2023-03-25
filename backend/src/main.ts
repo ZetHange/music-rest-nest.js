@@ -8,10 +8,10 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  const config = app.get(ConfigService)
-  const port = config.get('PORT')
+  const config = app.get(ConfigService);
+  const port = config.get('PORT');
 
-  app.setGlobalPrefix('api')
+  app.setGlobalPrefix('api');
   app.disable('x-powered-by');
 
   const options = new DocumentBuilder()
@@ -20,7 +20,7 @@ async function bootstrap() {
     .addBearerAuth()
     .addTag('Track')
     .addTag('Album')
-    .addTag('Group')
+    .addTag('Artist')
     .addTag('User')
     .addTag('Role')
     .addTag('Auth')
@@ -29,7 +29,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/api/docs', app, document);
 
-  console.log(`Сервер запущен на ${port || process.env.PORT || 80} порту`)
+  console.log(`Сервер запущен на ${port || process.env.PORT || 80} порту`);
   await app.listen(port || 80);
 }
-bootstrap() ;
+bootstrap();
