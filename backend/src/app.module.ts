@@ -17,7 +17,7 @@ import * as path from 'path';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '../.env' }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: './.env' }),
     ServeStaticModule.forRoot({
       rootPath: path.resolve(__dirname, 'static'),
       serveRoot: '/static/',

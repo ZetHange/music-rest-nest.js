@@ -25,3 +25,7 @@ PRIVATE_KEY=topsecter
 EMAIL_DEFAULT_FROM="Music API" <no-reply@example.com>
 EMAIL_TRANSPORT=smtps://no-reply@example.com:password@smtp.example.net
 ```
+Для выхода в интернет можно использовать serveo:
+```bash
+ssh -R 80:localhost:PORT serveo.net
+```

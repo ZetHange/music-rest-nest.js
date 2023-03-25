@@ -10,6 +10,7 @@ import { RoleService } from 'src/role/role.service';
 import { MailerService } from '@nestjs-modules/mailer';
 import { TokenService } from './../token/token.service';
 import { REQUEST } from '@nestjs/core';
+import e from 'express';
 
 @Injectable()
 export class UserService {
@@ -40,6 +41,14 @@ export class UserService {
     const userByRequest = await this.request.user;
     const user = await this.userRepository.findOne({
       where: { id: userByRequest.id },
+      select: {
+        id: true,
+        login: true,
+        email: true,
+        avatar: true,
+        isVerifiedEmail: true,
+      },
+      relations: ['roles'],
     });
     return user;
   }
@@ -142,5 +151,49 @@ export class UserService {
       'Пользователя с таким ID не существует',
       HttpStatus.BAD_REQUEST,
     );
+  }
+
+  async addRole(userId: number, roleId: number) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['roles'],
+    });
+    const role = await this.roleService.findOne(roleId);
+
+    if (user && role) {
+      const updatedUser = {
+        ...user,
+        roles: [...user.roles, role],
+      };
+
+      return await this.userRepository.save(updatedUser);
+    } else {
+      throw new HttpException(
+        'Пользователя или роли с такими ID не существует',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async removeRole(userId: number, roleId: number) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['roles'],
+    });
+    const role = await this.roleService.findOne(roleId);
+
+    if (user && role) {
+      const updatedUser = {
+        ...user,
+        roles: user.roles.filter((n: any) => Number(n.id) !== Number(roleId))
+      };
+
+      return await this.userRepository.save(updatedUser);
+    } else {
+      throw new HttpException(
+        'Пользователя или роли с такими ID не существует',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

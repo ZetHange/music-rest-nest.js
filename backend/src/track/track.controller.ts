@@ -71,10 +71,10 @@ export class TrackController {
     return this.trackService.searchTrack(q, pageSize, page);
   }
 
-  @Get(':id')
+  @Get(':trackId')
   @ApiOperation({ summary: 'Получение трека по ID' })
-  getById(@Param('id') id: number) {
-    return this.trackService.getTrackById(id);
+  getById(@Param('trackId') trackId: number) {
+    return this.trackService.getTrackById(trackId);
   }
 
   @Post('addGroup')

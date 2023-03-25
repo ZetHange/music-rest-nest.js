@@ -5,6 +5,7 @@ import {
   Query,
   Delete,
   Param,
+  Post,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -37,6 +38,22 @@ export class UserController {
   @ApiOperation({ summary: 'Потверждение аккаунта' })
   verify(@Query('token') token: string) {
     return this.userService.verify(token);
+  }
+
+  @Post('addRole')
+  @ApiOperation({ summary: 'Добавить роль пользователю' })
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
+  addRole(@Query('userId') userId: number, @Query('roleId') roleId: number) {
+    return this.userService.addRole(userId, roleId);
+  }
+
+  @Post('deleteRole')
+  @ApiOperation({ summary: 'Удалить роль у пользователя' })
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
+  deleteRole(@Query('userId') userId: number, @Query('roleId') roleId: number) {
+    return this.userService.removeRole(userId, roleId);
   }
 
   @Delete('delete/:userId')
