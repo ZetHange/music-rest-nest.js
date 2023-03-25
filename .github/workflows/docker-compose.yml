@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Сборка образа
 on: 
   workflow_dispatch:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+      runs-on: ubuntu-latest
       steps:
         - name: Собираем образ
           uses: isbang/compose-action@v1.4.1
