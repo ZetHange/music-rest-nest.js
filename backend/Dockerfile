@@ -1,6 +1,7 @@
 FROM node:19-alpine AS builder
 WORKDIR /app
 COPY /*.json ./
+RUN yarn install
 COPY . .
 RUN yarn run build
 
