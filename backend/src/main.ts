@@ -4,10 +4,9 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
-import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   const config = app.get(ConfigService);
   const port = config.get('PORT');
