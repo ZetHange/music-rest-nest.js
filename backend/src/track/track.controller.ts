@@ -121,7 +121,7 @@ export class TrackController {
     @Body() createTrackDto: CreateTrackDto,
   ) {
     const { cover, audio } = files;
-    return this.trackService.createTrack(createTrackDto, cover[0], audio[0]);
+    return this.trackService.createTrack(createTrackDto, cover, audio);
   }
 
   @Delete('delete/:trackId')

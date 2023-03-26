@@ -142,8 +142,8 @@ export class TrackService {
         HttpStatus.BAD_REQUEST,
       );
     } else {
-      const audioPath = this.fileService.createFile(cover, FileTypes.COVER);
-      const coverPath = this.fileService.createFile(audio, FileTypes.AUDIO);
+      const audioPath = this.fileService.createFile(audio, FileTypes.AUDIO);
+      const coverPath = this.fileService.createFile(cover, FileTypes.COVER);
 
       const user = await this.request.user;
 

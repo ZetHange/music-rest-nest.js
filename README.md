@@ -13,7 +13,7 @@
 - Редактировать/удалять треки (и другие штуки) можно созданные только юзером которые создал этот объект, админ может всё :)
 
 ### ENV
-Для запуска проекта необходима создать файл .env, рядом с папкой 
+Для запуска проекта необходимо создать файл .env, в папке backend
 ```env
 PORT=80
 POSTGRES_HOST=localhost
@@ -25,7 +25,18 @@ PRIVATE_KEY=topsecter
 EMAIL_DEFAULT_FROM="Music API" <no-reply@example.com>
 EMAIL_TRANSPORT=smtps://no-reply@example.com:password@smtp.example.net
 ```
-Для выхода в интернет можно использовать serveo:
+Если используете Docker, .env требуется создать в корне проекта с таким содержимым:
+```env
+PORT=80
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=supersecretdbpassword
+POSTGRES_DB=db
+POSTGRES_PORT=5432
+PRIVATE_KEY=SECRET
+EMAIL_DEFAULT_FROM="Music API" <no-reply@example.com>
+EMAIL_TRANSPORT=smtps://no-reply@example.com:password@smtp.example.net
+```
+Собираем и запускаем через docker compose:
 ```bash
-ssh -R 80:localhost:PORT serveo.net
+docker-compose up
 ```

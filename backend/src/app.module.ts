@@ -17,7 +17,7 @@ import * as path from 'path';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: './.env' }),
+    ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     ServeStaticModule.forRoot({
       rootPath: path.resolve(__dirname, 'static'),
       serveRoot: '/static/',
@@ -31,6 +31,7 @@ import * as path from 'path';
         database: process.env.POSTGRES_DB,
         port: Number(process.env.POSTGRES_PORT),
         entities: [__dirname + 'dist/**/*.entity{.ts,.js}'],
+        ssl: true,
         synchronize: true,
         autoLoadEntities: true,
         logging: true,
@@ -61,4 +62,5 @@ import * as path from 'path';
   controllers: [],
   providers: [],
 })
+
 export class AppModule {}

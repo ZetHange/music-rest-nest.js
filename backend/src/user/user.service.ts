@@ -125,8 +125,6 @@ export class UserService {
         roles: userCount === 1 ? [role, roleAdmin] : [role],
       };
 
-      console.log(JSON.stringify(userUpdated));
-
       await this.userRepository.save(userUpdated);
       await this.tokenService.deleteToken(token);
 
