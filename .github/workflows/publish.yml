@@ -15,6 +15,7 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           registry: ghcr.io
-          name: ghcr.io/ZetHange/music-rest-nest.js/app
+          name: ZetHange/music-rest-nest.js/backend
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          dockerfile: ./backend/Dockerfile
